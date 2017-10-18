@@ -13,6 +13,19 @@ namespace CloudGameSaves
   {
     ExtensionDataObject IExtensibleDataObject.ExtensionData { get; set; }
 
+    public virtual string Data
+    {
+      get
+      {
+        var dcs = new DataContractSerializer(GetType());
+        using (var stream = new MemoryStream())
+        {
+          dcs.WriteObject(stream, this);
+          return Convert.ToBase64String(stream.ToArray());
+        }
+      }
+    }
+
     protected object dc_clone()
     {
       var dcs = new DataContractSerializer(GetType());

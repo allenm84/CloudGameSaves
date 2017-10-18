@@ -24,20 +24,15 @@ namespace CloudGameSaves
       {
         if (createdMutex)
         {
-          var proc = Process.GetCurrentProcess();
-          var id = proc.Id.ToString();
-          Process.Start("CloudGameSavesWatchDog.exe", id);
-
           Application.EnableVisualStyles();
           Application.SetCompatibleTextRenderingDefault(false);
-          using (var context = new MainAppContext(id))
+          using (var context = new MainAppContext())
           {
             Application.Run(context);
+            context.Remove();
           }
         }
       }
     }
-
-    public static bool Force = false;
   }
 }

@@ -4,11 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudGameSaves", "CloudGameSaves\CloudGameSaves.csproj", "{FDF62790-D24B-4C7E-804E-071D1E6BE69F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{99149690-77A6-4283-AF4D-8F72E389F7CE} = {99149690-77A6-4283-AF4D-8F72E389F7CE}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudGameSavesWatchDog", "CloudGameSavesWatchDog\CloudGameSavesWatchDog.csproj", "{99149690-77A6-4283-AF4D-8F72E389F7CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +15,6 @@ Global
 		{FDF62790-D24B-4C7E-804E-071D1E6BE69F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDF62790-D24B-4C7E-804E-071D1E6BE69F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDF62790-D24B-4C7E-804E-071D1E6BE69F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{99149690-77A6-4283-AF4D-8F72E389F7CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99149690-77A6-4283-AF4D-8F72E389F7CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99149690-77A6-4283-AF4D-8F72E389F7CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99149690-77A6-4283-AF4D-8F72E389F7CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

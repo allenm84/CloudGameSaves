@@ -17,10 +17,6 @@ namespace CloudGameSaves
     public EditGaveSaveSettings(GameSavesSettings settings)
     {
       InitializeComponent();
-
-      numScanInterval.Minimum = 0;
-      numScanInterval.Maximum = int.MaxValue;
-      numScanInterval.DataBindings.Add(nameof(NumericUpDown.Value), settings, nameof(settings.ScanInterval));
       gameSaveBindingSource.DataSource = settings.Saves;
 
       nameDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;

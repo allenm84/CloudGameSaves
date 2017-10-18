@@ -12,29 +12,17 @@ namespace CloudGameSaves
 {
   public class MainAppContext : ApplicationContext
   {
-    private string mPipeName;
-    private Timer mPulseTimer;
-
-    private RobocopyOutputDialog mOutput;
+    private readonly List<GameSaveWatcher> mWatchers = new List<GameSaveWatcher>();
 
     private NotifyIcon mTrayIcon;
     private ContextMenuStrip mTrayMenu;
     private DataContractFile<GameSavesSettings> mFile;
     private GameSavesSettings mSettings;
-    private Timer mScanTimer;
 
-    public MainAppContext(string id)
+    public MainAppContext()
     {
-      mPipeName = string.Format("CloudGameSavesWatchDog_{0}", id);
-
-      mPulseTimer = new Timer();
-      mPulseTimer.Interval = 5000;
-      mPulseTimer.Tick += mPulseTimer_Tick;
-      mPulseTimer.Start();
-
       mTrayMenu = new ContextMenuStrip();
       mTrayMenu.Items.Add("Settings...", null, mnuShowSettings_Click);
-      mTrayMenu.Items.Add("Output...", null, mnuShowOutput_Click);
       mTrayMenu.Items.Add("Exit", null, mnuExit_Click);
 
       mTrayIcon = new NotifyIcon();
@@ -49,25 +37,7 @@ namespace CloudGameSaves
       mFile = new DataContractFile<GameSavesSettings>("settings.xml");
       mSettings = LoadSettings();
 
-      mScanTimer = new Timer();
-      mScanTimer.Interval = mSettings.ScanInterval;
-      mScanTimer.Tick += mScanTimer_Tick;
-      mScanTimer.Start();
-    }
-
-    private void mPulseTimer_Tick(object sender, EventArgs e)
-    {
-      using (var client = new NamedPipeClientStream(mPipeName))
-      {
-        try
-        {
-          client.Connect(2500);
-        }
-        catch
-        {
-          // couldn't connect?
-        }
-      }
+      UpdateWatchers();
     }
 
     ~MainAppContext()
@@ -83,10 +53,41 @@ namespace CloudGameSaves
       {
         settings = new GameSavesSettings();
         settings.Saves = new List<GameSave>();
-        settings.ScanInterval = 30000;
       }
 
       return settings;
+    }
+
+    private void UpdateWatchers()
+    {
+      var current = new Dictionary<string, GameSave>(StringComparer.Ordinal);
+      foreach (var save in mSettings.Saves)
+      {
+        current[save.Data] = save;
+      }
+
+      for (int i = mWatchers.Count - 1; i > -1; --i)
+      {
+        var watcher = mWatchers[i];
+        var save = watcher.Save.Data;
+        if (!current.ContainsKey(save))
+        {
+          // the watcher is invalid
+          watcher.Dispose();
+          mWatchers.RemoveAt(i);
+        }
+        else
+        {
+          // the watcher exists in the current! Lets
+          // remove it from the current
+          current.Remove(save);
+        }
+      }
+
+      foreach (var save in current.Values)
+      {
+        mWatchers.Add(new GameSaveWatcher(save));
+      }
     }
 
     private void ShowSettings()
@@ -102,22 +103,16 @@ namespace CloudGameSaves
         {
           mSettings = edited;
           mFile.TryWrite(mSettings);
-          mScanTimer.Interval = mSettings.ScanInterval;
+          UpdateWatchers();
         }
       }
     }
 
     public void Remove()
     {
-      mOutput?.Shutdown();
-      mScanTimer.Stop();
       mTrayIcon.Visible = false;
-    }
-    
-    protected override void Dispose(bool disposing)
-    {
-      base.Dispose(disposing);
-      Remove();
+      mWatchers.ForEach(w => w.Dispose());
+      mWatchers.Clear();
     }
 
     private void Application_ApplicationExit(object sender, EventArgs e)
@@ -135,28 +130,9 @@ namespace CloudGameSaves
       ShowSettings();
     }
 
-    private void mnuShowOutput_Click(object sender, EventArgs e)
-    {
-      if (mOutput == null)
-      {
-        mOutput = new RobocopyOutputDialog();
-      }
-      mOutput.Show();
-    }
-
     private void mnuExit_Click(object sender, EventArgs e)
     {
-      Program.Force = true;
       Application.Exit();
-    }
-
-    private void mScanTimer_Tick(object sender, EventArgs e)
-    {
-      if (!Robocopy.IsRunning)
-      {
-        var cloned = mSettings.Clone();
-        Robocopy.Run(cloned.Saves);
-      }
     }
   }
 }
