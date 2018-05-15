@@ -43,6 +43,7 @@
       this.btnCancel = new System.Windows.Forms.Button();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
       this.label2 = new System.Windows.Forms.Label();
+      this.btnRun = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridSaves)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.gameSaveBindingSource)).BeginInit();
@@ -164,12 +165,14 @@
       // 
       // tableLayoutPanel3
       // 
-      this.tableLayoutPanel3.ColumnCount = 3;
+      this.tableLayoutPanel3.ColumnCount = 4;
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
       this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
       this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-      this.tableLayoutPanel3.Controls.Add(this.btnOK, 1, 0);
-      this.tableLayoutPanel3.Controls.Add(this.btnCancel, 2, 0);
+      this.tableLayoutPanel3.Controls.Add(this.btnOK, 2, 0);
+      this.tableLayoutPanel3.Controls.Add(this.btnCancel, 3, 0);
+      this.tableLayoutPanel3.Controls.Add(this.btnRun, 0, 0);
       this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 306);
       this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
@@ -186,7 +189,7 @@
       this.btnOK.Location = new System.Drawing.Point(376, 3);
       this.btnOK.Name = "btnOK";
       this.btnOK.Size = new System.Drawing.Size(74, 24);
-      this.btnOK.TabIndex = 0;
+      this.btnOK.TabIndex = 1;
       this.btnOK.Text = "Save";
       this.btnOK.UseVisualStyleBackColor = true;
       // 
@@ -197,7 +200,7 @@
       this.btnCancel.Location = new System.Drawing.Point(456, 3);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(74, 24);
-      this.btnCancel.TabIndex = 1;
+      this.btnCancel.TabIndex = 2;
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = true;
       // 
@@ -229,6 +232,17 @@
       this.label2.Size = new System.Drawing.Size(44, 13);
       this.label2.TabIndex = 2;
       this.label2.Text = "Games:";
+      // 
+      // btnRun
+      // 
+      this.btnRun.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.btnRun.Location = new System.Drawing.Point(3, 3);
+      this.btnRun.Name = "btnRun";
+      this.btnRun.Size = new System.Drawing.Size(74, 24);
+      this.btnRun.TabIndex = 0;
+      this.btnRun.Text = "Run";
+      this.btnRun.UseVisualStyleBackColor = true;
+      this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
       // 
       // EditGaveSaveSettings
       // 
@@ -267,5 +281,6 @@
     private System.Windows.Forms.Button btnCancel;
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Button btnRun;
   }
 }

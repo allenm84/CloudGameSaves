@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudGameSaves", "CloudGameSaves\CloudGameSaves.csproj", "{FDF62790-D24B-4C7E-804E-071D1E6BE69F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{826AB62E-CD47-4A0E-AB45-97EBA5D92471} = {826AB62E-CD47-4A0E-AB45-97EBA5D92471}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MirrorToDropBox", "MirrorToDropBox\MirrorToDropBox.csproj", "{826AB62E-CD47-4A0E-AB45-97EBA5D92471}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +20,15 @@ Global
 		{FDF62790-D24B-4C7E-804E-071D1E6BE69F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDF62790-D24B-4C7E-804E-071D1E6BE69F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDF62790-D24B-4C7E-804E-071D1E6BE69F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{826AB62E-CD47-4A0E-AB45-97EBA5D92471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{826AB62E-CD47-4A0E-AB45-97EBA5D92471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{826AB62E-CD47-4A0E-AB45-97EBA5D92471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{826AB62E-CD47-4A0E-AB45-97EBA5D92471}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7E6C1450-9550-4DFA-829D-CBF29223461F}
 	EndGlobalSection
 EndGlobal
