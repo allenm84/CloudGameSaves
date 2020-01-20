@@ -45,6 +45,18 @@ namespace CloudGameSaves
       }
     }
 
+    protected override void OnLoad(EventArgs e)
+    {
+      base.OnLoad(e);
+      chkRunAtStartup.Checked = Program.RunAtStartup;
+      chkRunAtStartup.CheckedChanged += chkRunAtStartup_CheckedChanged;
+    }
+
+    private void chkRunAtStartup_CheckedChanged(object sender, EventArgs e)
+    {
+      Program.UpdateStartup(chkRunAtStartup.Checked);
+    }
+
     private void editor_NewItemNeeded(object sender, NewItemNeededEventArgs<GameSave> e)
     {
       e.Item = new GameSave

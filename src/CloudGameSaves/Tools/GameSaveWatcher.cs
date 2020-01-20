@@ -37,26 +37,32 @@ namespace CloudGameSaves
 
     private void CreateWatcher()
     {
-      mWatcher = new FileSystemWatcher();
-      mWatcher.Path = mSave.Location;
-      mWatcher.IncludeSubdirectories = true;
-      mWatcher.Changed += watcher_Changed;
-      mWatcher.Created += mWacthcer_Created;
-      mWatcher.Deleted += mWatcher_Deleted;
-      mWatcher.Error += mWatcher_Error;
-      mWatcher.Renamed += mWatcher_Renamed;
-      mWatcher.EnableRaisingEvents = true;
+      if (mSave.IsValid)
+      {
+        mWatcher = new FileSystemWatcher();
+        mWatcher.Path = mSave.Location;
+        mWatcher.IncludeSubdirectories = true;
+        mWatcher.Changed += watcher_Changed;
+        mWatcher.Created += mWacthcer_Created;
+        mWatcher.Deleted += mWatcher_Deleted;
+        mWatcher.Error += mWatcher_Error;
+        mWatcher.Renamed += mWatcher_Renamed;
+        mWatcher.EnableRaisingEvents = true;
+      }
     }
 
     private void DestroyWatcher()
     {
-      mWatcher.EnableRaisingEvents = false;
-      mWatcher.Changed -= watcher_Changed;
-      mWatcher.Created -= mWacthcer_Created;
-      mWatcher.Deleted -= mWatcher_Deleted;
-      mWatcher.Error -= mWatcher_Error;
-      mWatcher.Renamed -= mWatcher_Renamed;
-      mWatcher.Dispose();
+      if (mWatcher != null)
+      {
+        mWatcher.EnableRaisingEvents = false;
+        mWatcher.Changed -= watcher_Changed;
+        mWatcher.Created -= mWacthcer_Created;
+        mWatcher.Deleted -= mWatcher_Deleted;
+        mWatcher.Error -= mWatcher_Error;
+        mWatcher.Renamed -= mWatcher_Renamed;
+        mWatcher.Dispose();
+      }
     }
 
     private void mWatcher_Renamed(object sender, RenamedEventArgs e)

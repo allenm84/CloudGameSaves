@@ -20,6 +20,9 @@ namespace CloudGameSaves
     [DataMember(Order = 3)]
     public List<GameSaveBackup> Backups { get; set; }
 
+    [IgnoreDataMember]
+    public bool IsValid => Directory.Exists(Location);
+
     GameSave IEditor<GameSave>.Clone()
     {
       return base.dc_clone() as GameSave;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace CloudGameSaves
 {
   static class Program
   {
+    public const string RegistryPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+
     public const string AppId = "8D35DEC9-F71C-4A07-B2BB-C535540D1430";
     public const string Namespace = "http://www.mapa.com/mike/cloudGameSaves";
 
@@ -17,10 +20,18 @@ namespace CloudGameSaves
     /// The main entry point for the application.
     /// </summary>
     [STAThread]
-    static void Main()
+    static void Main(string[] args)
     {
-      bool createdMutex;
-      using (var mutex = new Mutex(true, AppId, out createdMutex))
+      if (args.Length == 1)
+      {
+        if (bool.TryParse(args[0], out var add))
+        {
+          SetStartup(add);
+          return;
+        }
+      }
+
+      using (var mutex = new Mutex(true, AppId, out var createdMutex))
       {
         if (createdMutex)
         {
@@ -33,6 +44,39 @@ namespace CloudGameSaves
           }
         }
       }
+    }
+
+    public static bool RunAtStartup => !string.IsNullOrWhiteSpace(GetCurrentValue());
+
+    static string GetCurrentValue()
+    {
+      return Registry
+      .CurrentUser
+      .OpenSubKey(RegistryPath, false)
+      .GetValue(AppId, "") as string;
+    }
+
+    static void SetStartup(bool add)
+    {
+      var rk = Registry.CurrentUser.OpenSubKey(RegistryPath, true);
+
+      if (add)
+      {
+        rk.SetValue(AppId, Application.ExecutablePath);
+      }
+      else
+      {
+        rk.DeleteValue(AppId, false);
+      }
+    }
+
+    public static void UpdateStartup(bool add)
+    {
+      var info = new ProcessStartInfo(Application.ExecutablePath);
+      info.Verb = "runas";
+      info.Arguments = $"{add}";
+      info.UseShellExecute = true;
+      Process.Start(info);
     }
   }
 }
