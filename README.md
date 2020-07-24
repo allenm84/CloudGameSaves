@@ -1,2 +1,2 @@
 # CloudGameSaves
-App to manage which apps copy their save data to cloud storage.
+App to manage which apps copy their save data to cloud storage using robocopy
