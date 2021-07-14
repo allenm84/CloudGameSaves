@@ -1,4 +1,0 @@
-<cro type="Default" key="CloudGameSaves" path="Programs" addToPath="false">
-  <pattern>*.dll</pattern>
-  <pattern>*.exe</pattern>
-</cro>
